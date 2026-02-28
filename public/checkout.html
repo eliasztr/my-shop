@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - My Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="/" class="navbar-logo">✦ My Shop</a>
+  <div class="navbar-search">
+    <span class="search-icon">🔍</span>
+    <input type="text" placeholder="Search...">
+  </div>
+  <div class="navbar-actions">
+    <a href="cart.html" class="cart-btn">🛒<span class="cart-count" id="cartCount">0</span></a>
+  </div>
+</nav>
+
+<div style="max-width:1000px;margin:32px auto;padding:0 24px">
+  <h1 style="font-size:28px;margin-bottom:8px">Checkout</h1>
+  <div class="gold-divider" style="margin-bottom:32px"></div>
+</div>
+
+<div class="checkout-section">
+  <!-- ORDER SUMMARY -->
+  <div>
+    <div class="admin-card">
+      <h2>Order Summary</h2>
+      <div id="orderItems"></div>
+      <div class="checkout-total" id="orderTotal"></div>
+    </div>
+  </div>
+
+  <!-- CUSTOMER FORM -->
+  <div class="admin-card">
+    <h2>Your Information</h2>
+    <div class="form-group">
+      <label>FULL NAME *</label>
+      <input type="text" id="fullName" placeholder="e.g. Sara Khalil">
+      <div class="form-error" id="nameError">Please enter your full name</div>
+    </div>
+    <div class="form-group">
+      <label>PHONE NUMBER * (Lebanese format: 03/70/71/76/78/81)</label>
+      <input type="tel" id="phoneNum" placeholder="e.g. 03123456">
+      <div class="form-error" id="phoneError">Please enter a valid Lebanese number</div>
+    </div>
+    <div class="form-group">
+      <label>DELIVERY ADDRESS *</label>
+      <textarea id="address" placeholder="e.g. Beirut, Hamra, near ABC Mall"></textarea>
+      <div class="form-error" id="addressError">Please enter your delivery address</div>
+    </div>
+    <div class="form-group">
+      <label>EMAIL (optional)</label>
+      <input type="email" id="email" placeholder="sara@example.com">
+    </div>
+    <button class="btn-place-order" id="placeOrderBtn" onclick="placeOrder()">✅ Place Order</button>
+  </div>
+</div>
+
+<a href="https://wa.me/96170621593" target="_blank" class="whatsapp-btn">
+  <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" width="28" height="28" style="filter:invert(1)">
+</a>
+
+<div class="toast" id="toast"></div>
+<script src="script.js"></script>
+<script src="checkout.js"></script>
+</body>
+</html>

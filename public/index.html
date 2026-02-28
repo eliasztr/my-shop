@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Shop - Accessories & Jewelry</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="/" class="navbar-logo">✦ My Shop</a>
+  <div class="navbar-search">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search for jewelry & accessories..." oninput="filterProducts()">
+  </div>
+  <div class="navbar-actions">
+    <a href="cart.html" class="cart-btn">
+      🛒
+      <span class="cart-count" id="cartCount">0</span>
+    </a>
+  </div>
+</nav>
+
+<!-- CATEGORIES BAR -->
+<div class="categories-bar" id="categoriesBar">
+  <a href="#" class="category-link active" onclick="filterByCategory(null, this)">All</a>
+</div>
+
+<!-- HERO SECTION -->
+<section class="hero" id="heroSection">
+  <div class="hero-slides" id="heroSlides"></div>
+  <button class="hero-arrow hero-prev" id="heroPrev" onclick="heroSlide(-1)" style="display:none">&#8249;</button>
+  <button class="hero-arrow hero-next" id="heroNext" onclick="heroSlide(1)" style="display:none">&#8250;</button>
+  <div class="hero-dots" id="heroDots"></div>
+  <div class="hero-content">
+    <h1 id="heroHeading">Timeless Elegance</h1>
+    <p id="heroSubtitle">Discover our exclusive collection of handcrafted jewelry & accessories</p>
+    <a href="#products" class="btn-primary" id="heroBtn">Shop Now</a>
+  </div>
+</section>
+
+<!-- OFFERS BANNER -->
+<div class="offers-banner" id="offersBanner">
+  <span id="offersText"></span>
+  <button class="dismiss-btn" onclick="dismissBanner()">✕</button>
+</div>
+
+<!-- PRODUCTS SECTION -->
+<section class="products-section" id="products">
+  <h2 class="section-heading">Our <span>Collection</span></h2>
+  <div class="gold-divider"></div>
+  <div id="productsGrid" class="products-grid">
+    <div class="loading"><div class="spinner"></div>Loading products...</div>
+  </div>
+</section>
+
+<!-- WHATSAPP BUTTON -->
+<a href="https://wa.me/96170621593" target="_blank" class="whatsapp-btn" title="Chat on WhatsApp">
+  <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" width="28" height="28" style="filter:invert(1)">
+</a>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product - My Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- OFFERS BANNER -->
+<div class="offers-banner" id="offersBanner">
+  <span id="offersText"></span>
+  <button class="dismiss-btn" onclick="dismissBanner()">✕</button>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="/" class="navbar-logo">✦ My Shop</a>
+  <div class="navbar-search">
+    <span class="search-icon">🔍</span>
+    <input type="text" placeholder="Search..." onkeydown="if(event.key==='Enter') location.href='/?q='+this.value">
+  </div>
+  <div class="navbar-actions">
+    <a href="cart.html" class="cart-btn">🛒<span class="cart-count" id="cartCount">0</span></a>
+  </div>
+</nav>
+
+<!-- PRODUCT DETAILS -->
+<div class="product-details-section" id="productDetails">
+  <div class="loading"><div class="spinner"></div>Loading...</div>
+</div>
+
+<!-- RELATED PRODUCTS -->
+<div class="related-section" id="relatedSection" style="display:none">
+  <h2>You May Also <span>Like</span></h2>
+  <div class="gold-divider"></div>
+  <div class="products-grid" id="relatedGrid"></div>
+</div>
+
+<!-- FULLSCREEN IMAGE MODAL -->
+<div class="image-modal-overlay" id="imageModal" onclick="closeImageModal()">
+  <button class="close-btn" onclick="closeImageModal()">✕</button>
+  <img id="imageModalImg" src="" alt="Product">
+</div>
+
+<!-- WHATSAPP BUTTON -->
+<a href="https://wa.me/96170621593" target="_blank" class="whatsapp-btn">
+  <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" width="28" height="28" style="filter:invert(1)">
+</a>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+<script src="product.js"></script>
+</body>
+</html>

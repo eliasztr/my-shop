@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - My Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="login-page">
+  <div class="login-card">
+    <h1>✦ My Shop</h1>
+    <p>Admin Panel Access</p>
+    <div class="login-error" id="loginError">Incorrect password. Try again.</div>
+    <div class="form-group">
+      <label>PASSWORD</label>
+      <input type="password" id="passwordInput" placeholder="Enter admin password" onkeydown="if(event.key==='Enter') login()">
+    </div>
+    <button class="btn-navy" style="width:100%;padding:14px;font-size:16px;border-radius:8px;margin-top:8px" onclick="login()">
+      Login →
+    </button>
+    <p style="text-align:center;margin-top:16px;font-size:13px;color:#999">
+      <a href="/" style="color:var(--gold)">← Back to Shop</a>
+    </p>
+  </div>
+</div>
+
+<script>
+// Check if already logged in
+if (localStorage.getItem('adminToken') === 'admin_logged_in') {
+  location.href = 'admin.html';
+}
+
+const ADMIN_PASSWORD = 'admin123'; // Change this password!
+
+function login() {
+  const pwd = document.getElementById('passwordInput').value;
+  const err = document.getElementById('loginError');
+  if (pwd === ADMIN_PASSWORD) {
+    localStorage.setItem('adminToken', 'admin_logged_in');
+    location.href = 'admin.html';
+  } else {
+    err.classList.add('visible');
+    document.getElementById('passwordInput').value = '';
+  }
+}
+</script>
+</body>
+</html>

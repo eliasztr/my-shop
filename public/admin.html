@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - My Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ADMIN NAVBAR -->
+<nav class="admin-navbar">
+  <h1>⚙️ Admin Panel</h1>
+  <div style="display:flex;gap:12px;align-items:center">
+    <a href="/" style="color:rgba(255,255,255,0.7);font-size:14px">← View Shop</a>
+    <button class="btn-logout" onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<!-- TABS -->
+<div class="admin-container">
+  <div class="admin-tabs">
+    <button class="admin-tab active" onclick="switchTab('products', this)">🛍️ Products</button>
+    <button class="admin-tab" onclick="switchTab('orders', this)">📦 Orders</button>
+    <button class="admin-tab" onclick="switchTab('categories', this)">🏷️ Categories</button>
+    <button class="admin-tab" onclick="switchTab('settings', this)">⚙️ Settings</button>
+    <button class="admin-tab" onclick="switchTab('analytics', this)">📊 Analytics</button>
+  </div>
+
+  <!-- PRODUCTS TAB -->
+  <div class="admin-section active" id="tab-products">
+    <div class="admin-card">
+      <h2>Add New Product</h2>
+      <div class="admin-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>PRODUCT NAME *</label>
+            <input type="text" id="prodName" placeholder="e.g. Gold Necklace">
+          </div>
+          <div class="form-group">
+            <label>PRICE ($) *</label>
+            <input type="number" id="prodPrice" placeholder="29.99" min="0" step="0.01">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>SALE PRICE ($) (optional)</label>
+            <input type="number" id="prodSalePrice" placeholder="Leave empty for no sale" min="0" step="0.01">
+          </div>
+          <div class="form-group">
+            <label>CATEGORY</label>
+            <input type="text" id="prodCategory" placeholder="e.g. Necklaces" list="categoryList">
+            <datalist id="categoryList"></datalist>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>DESCRIPTION</label>
+          <textarea id="prodDescription" placeholder="Describe the product..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>STOCK (optional — how many available)</label>
+          <input type="number" id="prodStock" placeholder="e.g. 10 — leave empty if unlimited" min="0">
+        </div>
+        <div class="form-group">
+          <label>PRODUCT IMAGES</label>
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
+            <button type="button" class="btn-navy btn-sm" onclick="document.getElementById('prodImagesInput').click()">+ Add Image</button>
+            <small style="color:#999">Click to add images one by one (or select multiple)</small>
+          </div>
+          <input type="file" id="prodImagesInput" accept="image/*" multiple style="display:none" onchange="accumulateImages(this, 'addImagesList', 'addImagesData')">
+          <input type="hidden" id="addImagesData" value="[]">
+          <div class="image-preview-grid" id="addImagesList"></div>
+        </div>
+        <div style="margin-top:16px">
+          <button class="btn-gold" onclick="addProduct()" id="addProductBtn">+ Add Product</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <h2>All Products <span id="productCount" style="color:var(--text-light);font-size:16px;font-weight:normal"></span></h2>
+      <div id="adminProductsList"><div class="loading"><div class="spinner"></div>Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- ORDERS TAB -->
+  <div class="admin-section" id="tab-orders">
+    <div class="admin-card">
+      <h2>Orders</h2>
+      <div id="ordersContent"><div class="loading"><div class="spinner"></div>Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES TAB -->
+  <div class="admin-section" id="tab-categories">
+    <div class="admin-card">
+      <h2>Add Category</h2>
+      <div class="admin-form" style="display:flex;gap:12px;align-items:flex-end">
+        <div class="form-group" style="flex:1;margin:0">
+          <label>CATEGORY NAME</label>
+          <input type="text" id="catName" placeholder="e.g. Rings">
+        </div>
+        <button class="btn-gold" onclick="addCategory()">+ Add</button>
+      </div>
+    </div>
+    <div class="admin-card">
+      <h2>All Categories</h2>
+      <div id="categoriesList"><div class="loading"><div class="spinner"></div>Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- SETTINGS TAB -->
+  <div class="admin-section" id="tab-settings">
+    <div class="admin-card">
+      <h2>Hero Banner</h2>
+      <div class="admin-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>HEADING TEXT</label>
+            <input type="text" id="heroHeadingInput" placeholder="Timeless Elegance">
+          </div>
+          <div class="form-group">
+            <label>BUTTON TEXT</label>
+            <input type="text" id="heroBtnInput" placeholder="Shop Now">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>SUBTITLE TEXT</label>
+          <input type="text" id="heroSubtitleInput" placeholder="Discover our exclusive collection...">
+        </div>
+        <div class="form-group">
+          <label>BACKGROUND IMAGES (gallery with arrows on homepage)</label>
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
+            <button type="button" class="btn-navy btn-sm" onclick="document.getElementById('heroBgFileInput').click()">+ Add Image</button>
+            <small style="color:#999">Add one or more — customers swipe between them</small>
+          </div>
+          <input type="file" id="heroBgFileInput" accept="image/*" multiple style="display:none" onchange="accumulateHeroImages(this)">
+          <div class="image-preview-grid" id="heroImagesList"></div>
+        </div>
+        <button class="btn-gold" id="saveHeroBtn" onclick="saveHeroSettings()" style="margin-top:8px">Save Hero</button>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <h2>Offers Banner</h2>
+      <div class="admin-form">
+        <div class="form-group">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+            <input type="checkbox" id="offerEnabled" style="width:18px;height:18px">
+            Enable Offers Banner
+          </label>
+        </div>
+        <div class="form-group">
+          <label>BANNER TEXT (write whatever you want)</label>
+          <input type="text" id="offerText" placeholder="e.g. Free delivery on all orders this week!">
+          <small style="color:#999;font-size:12px">This exact text will appear in the banner</small>
+        </div>
+        <button class="btn-gold" onclick="saveOfferSettings()" style="margin-top:8px">Save Offer Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANALYTICS TAB -->
+  <div class="admin-section" id="tab-analytics">
+    <div id="analyticsContent"><div class="loading"><div class="spinner"></div>Loading...</div></div>
+  </div>
+</div>
+
+<!-- EDIT PRODUCT MODAL -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal-box">
+    <h2>Edit Product</h2>
+    <input type="hidden" id="editProductId">
+    <div class="admin-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>NAME *</label>
+          <input type="text" id="editName" placeholder="Product name">
+        </div>
+        <div class="form-group">
+          <label>PRICE ($) *</label>
+          <input type="number" id="editPrice" min="0" step="0.01">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>SALE PRICE ($)</label>
+          <input type="number" id="editSalePrice" min="0" step="0.01" placeholder="Leave empty to remove">
+        </div>
+        <div class="form-group">
+          <label>CATEGORY</label>
+          <input type="text" id="editCategory" list="categoryList">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>DESCRIPTION</label>
+        <textarea id="editDescription"></textarea>
+      </div>
+      <div class="form-group">
+        <label>STOCK (optional — how many available)</label>
+        <input type="number" id="editStock" placeholder="Leave empty if unlimited" min="0">
+      </div>
+      <div class="form-group">
+        <label>IMAGES <small style="color:#999">(click ✕ to remove)</small></label>
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
+          <button type="button" class="btn-navy btn-sm" onclick="document.getElementById('editImagesInput').click()">+ Add Image</button>
+          <small style="color:#999">Add images one by one or select multiple</small>
+        </div>
+        <input type="file" id="editImagesInput" accept="image/*" multiple style="display:none" onchange="accumulateImages(this, 'editImagesList', null)">
+        <div class="image-preview-grid" id="editImagesList"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-navy" onclick="closeEditModal()">Cancel</button>
+      <button class="btn-gold" onclick="saveProduct()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER DETAIL MODAL -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal-box">
+    <h2>Order Details</h2>
+    <div id="orderModalContent"></div>
+    <div class="modal-footer">
+      <button class="btn-navy" onclick="document.getElementById('orderModal').classList.remove('open')">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="script.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
