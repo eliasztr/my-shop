@@ -39,9 +39,12 @@
 </div>
 
 <!-- FULLSCREEN IMAGE MODAL -->
-<div class="image-modal-overlay" id="imageModal" onclick="closeImageModal()">
+<div class="image-modal-overlay" id="imageModal">
   <button class="close-btn" onclick="closeImageModal()">✕</button>
+  <button class="modal-arrow modal-prev" onclick="modalSlide(-1)">&#8249;</button>
   <img id="imageModalImg" src="" alt="Product">
+  <button class="modal-arrow modal-next" onclick="modalSlide(1)">&#8250;</button>
+  <div class="modal-dots" id="modalDots"></div>
 </div>
 
 <!-- WHATSAPP BUTTON -->

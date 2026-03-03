@@ -198,12 +198,63 @@ function initSwipe() {
   }, { passive: true });
 }
 
-// ============ IMAGE MODAL ============
-function openImageModal(src) {
-  document.getElementById('imageModalImg').src = src;
+// ============ IMAGE MODAL (fullscreen gallery) ============
+let modalIndex = 0;
+
+function openImageModal(startIndex) {
+  modalIndex = startIndex !== undefined ? startIndex : currentImageIndex;
+  renderModal();
   document.getElementById('imageModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  initModalSwipe();
 }
-function closeImageModal() { document.getElementById('imageModal').classList.remove('open'); }
+
+function renderModal() {
+  document.getElementById('imageModalImg').src = productImages[modalIndex];
+  // dots
+  const dotsEl = document.getElementById('modalDots');
+  if (productImages.length > 1) {
+    dotsEl.innerHTML = productImages.map((_, i) =>
+      '<span class="' + (i === modalIndex ? 'active' : '') + '" onclick="goModalSlide(' + i + ')"></span>'
+    ).join('');
+    document.querySelector('.modal-prev').style.display = 'flex';
+    document.querySelector('.modal-next').style.display = 'flex';
+  } else {
+    dotsEl.innerHTML = '';
+    document.querySelector('.modal-prev').style.display = 'none';
+    document.querySelector('.modal-next').style.display = 'none';
+  }
+}
+
+function goModalSlide(index) {
+  modalIndex = index;
+  renderModal();
+}
+
+function modalSlide(dir) {
+  modalIndex = (modalIndex + dir + productImages.length) % productImages.length;
+  renderModal();
+}
+
+function closeImageModal() {
+  document.getElementById('imageModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close on background click
+document.getElementById('imageModal').addEventListener('click', function(e) {
+  if (e.target === this || e.target === document.getElementById('imageModalImg')) closeImageModal();
+});
+
+function initModalSwipe() {
+  const modal = document.getElementById('imageModal');
+  let tx = 0;
+  modal.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true, once: true });
+  modal.addEventListener('touchend', e => {
+    const diff = tx - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) modalSlide(diff > 0 ? 1 : -1);
+  }, { passive: true, once: true });
+}
 
 // ============ RELATED ============
 async function loadRelated(category) {

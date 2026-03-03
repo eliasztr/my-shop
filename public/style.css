@@ -595,19 +595,47 @@ select option[value="ملغي"] { background: #f8d7da; }
 /* Fullscreen image modal */
 .image-modal-overlay {
   position: fixed; inset: 0;
-  background: rgba(0,0,0,0.9); z-index: 3000;
+  background: rgba(0,0,0,0.95); z-index: 3000;
   display: flex; align-items: center; justify-content: center;
-  cursor: zoom-out;
   visibility: hidden; opacity: 0;
-  transition: var(--transition);
+  transition: opacity 0.25s ease;
 }
 .image-modal-overlay.open { visibility: visible; opacity: 1; }
-.image-modal-overlay img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 4px; }
+.image-modal-overlay img {
+  max-width: 95vw; max-height: 92vh;
+  object-fit: contain; border-radius: 4px;
+  user-select: none;
+}
 .image-modal-overlay .close-btn {
-  position: absolute; top: 20px; right: 24px;
-  color: white; font-size: 32px; background: none; opacity: 0.8;
+  position: absolute; top: 16px; right: 20px;
+  color: white; font-size: 36px; background: none; opacity: 0.8;
+  z-index: 10; line-height: 1;
 }
 .image-modal-overlay .close-btn:hover { opacity: 1; }
+
+.modal-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.15); color: white;
+  border: none; border-radius: 50%;
+  width: 52px; height: 52px; font-size: 30px;
+  cursor: pointer; z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s; line-height: 1;
+}
+.modal-arrow:hover { background: rgba(255,255,255,0.35); }
+.modal-prev { left: 16px; }
+.modal-next { right: 16px; }
+
+.modal-dots {
+  position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 8px;
+}
+.modal-dots span {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: rgba(255,255,255,0.4); cursor: pointer;
+  transition: background 0.2s;
+}
+.modal-dots span.active { background: white; }
 
 /* ============ LOGIN PAGE ============ */
 .login-page {
